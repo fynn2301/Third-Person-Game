@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     public float groundDistance = 0.4f;
 
     // <Objects>
+    // character animator
+    public Animator charAnimator;
     // character controller of player
     public CharacterController controller;
     // joystick object
@@ -48,5 +50,17 @@ public class PlayerMovement : MonoBehaviour
             velocity.y = -2f;
         }
         controller.Move(velocity * Time.deltaTime);
+
+        //animation check
+        if (!move.x.Equals(0) || !move.y.Equals(0))
+        {
+            Debug.Log("running");
+            charAnimator.SetBool("CharRunningToFront", true);
+        }
+        else
+        {
+            Debug.Log("notrunning");
+            charAnimator.SetBool("CharRunningToFront", false);
+        }
     }
 }
