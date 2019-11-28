@@ -7,12 +7,16 @@ public class PlayerMovement : MonoBehaviour
     // <Settings>
     // walkspeed of player
     public float walkSpeed = 1f;
+    public float walkSpeedForeBack = 1f;
+    public float walkSpeedDiagonal = 1f;
+    public float walkSpeedLeftRight = 1f;
     public float gravity = -9.81f;
     public float groundDistance = 0.4f;
 
     // <Objects>
-    // character animator
+    // character/gun animator
     public Animator charAnimator;
+    public Animator gunAnimator;
     // character controller of player
     public CharacterController controller;
     // joystick object
@@ -21,11 +25,12 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask groundMask;
     public Transform groundCheck;
     // joystick script
-
     WalkJoystick walkJoystick;
     // gravity
     Vector3 velocity;
     bool isGrounded;
+    // animation state
+    int animState = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -51,16 +56,85 @@ public class PlayerMovement : MonoBehaviour
         }
         controller.Move(velocity * Time.deltaTime);
 
-        //animation check
-        if (!move.x.Equals(0) || !move.y.Equals(0))
+        // Animation settings
+        CheckAnimationState(move);
+    }
+
+
+    void CheckAnimationState(Vector3 movementVec)
+    {
+        
+        // check movement vector to animation state
+        if (movementVec.magnitude > 0)
         {
-            Debug.Log("running");
-            charAnimator.SetBool("CharRunningToFront", true);
-        }
-        else
+            // get angular to get walking direction
+            float walkingAng = Mathf.Atan(movementVec.x / movementVec.z);
+            Debug.Log(walkingAng.ToString());
+            if (Mathf.Abs(movementVec.z) >= Mathf.Abs(movementVec.x))
+            {
+                // Forward
+                if ((Mathf.Abs(walkingAng) <= Mathf.PI / 8) && movementVec.z > 0 && Mathf.Abs(movementVec.z) > Mathf.Abs(movementVec.x))
+                {
+                    animState = 1;
+                    charAnimator.speed = walkSpeedForeBack;
+                    gunAnimator.speed = walkSpeedForeBack;
+                }
+                // Forward-Right
+                else if (walkingAng > Mathf.PI / 8 && walkingAng < Mathf.PI / 4 && movementVec.z > 0 && movementVec.x > 0)
+                {
+                    animState = 6;
+                    charAnimator.speed = walkSpeedDiagonal;
+                    gunAnimator.speed = walkSpeedDiagonal;
+                }
+                // Right
+                else if ((Mathf.Abs(walkingAng) >= Mathf.PI / 4) && movementVec.x > 0 && Mathf.Abs(movementVec.z) < Mathf.Abs(movementVec.x))
+                {
+                    animState = 3;
+                    charAnimator.speed = walkSpeedLeftRight;
+                    gunAnimator.speed = walkSpeedLeftRight;
+                }
+                // Backward-Right
+                else if (walkingAng < -Mathf.PI / 8 && walkingAng > -Mathf.PI / 4 && movementVec.z < 0 && movementVec.x > 0)
+                {
+
+                }
+                // Backward
+                else if ((Mathf.Abs(walkingAng) <= Mathf.PI / 8) && movementVec.z < 0 && Mathf.Abs(movementVec.z) > Mathf.Abs(movementVec.x))
+                {
+                    animState = 2;
+                    charAnimator.speed = walkSpeedForeBack;
+                    gunAnimator.speed = walkSpeedForeBack;
+                }
+                // Backward-Left
+                else if (walkingAng > Mathf.PI / 8 && walkingAng < Mathf.PI / 4 && movementVec.z < 0 && movementVec.x < 0)
+                {
+
+                }
+                // Left
+                else if ((Mathf.Abs(walkingAng) >= Mathf.PI / 4) && movementVec.x < 0 && Mathf.Abs(movementVec.z) < Mathf.Abs(movementVec.x))
+                {
+                    animState = 4;
+                    charAnimator.speed = walkSpeedLeftRight;
+                    gunAnimator.speed = walkSpeedLeftRight;
+                }
+                // Forward-Left
+                else if (walkingAng < -Mathf.PI / 8 && walkingAng > -Mathf.PI / 4 && movementVec.z > 0 && movementVec.x < 0)
+                {
+                    animState = 5;
+                    charAnimator.speed = walkSpeedDiagonal;
+                    gunAnimator.speed = walkSpeedDiagonal;
+                }
+                Debug.Log(animState.ToString());
+        } else
         {
-            Debug.Log("notrunning");
-            charAnimator.SetBool("CharRunningToFront", false);
+            animState = 0;
+            charAnimator.speed = 1f;
+            gunAnimator.speed = 1f;
         }
+
+        // set animator variable
+
+        charAnimator.SetInteger("AnimationState", animState);
+        gunAnimator.SetInteger("RunningState", animState);
     }
 }
