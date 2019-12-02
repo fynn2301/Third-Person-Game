@@ -1,20 +1,32 @@
 fileFormatVersion: 2
-guid: 958d084def2564cd08053767f2ed8228
+guid: 163c96bb207324020a70016507544366
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable:
   - first:
-      74: -967104276491584380
-    second: ArmatureWeapon|GunBack
+      74: 750300079940990688
+    second: ArmatureWeapon|GunRunningBackwards
   - first:
-      74: -5941256528115183773
-    second: ArmatureWeapon|GunFore
+      74: -3200521403650530054
+    second: ArmatureWeapon|GunRunningBackwardsLeft
   - first:
-      74: -6847641610584134055
-    second: ArmatureWeapon|GunLeft
+      74: -5739968840008707837
+    second: ArmatureWeapon|GunRunningBackwardsRight
   - first:
-      74: 4232791866341539133
-    second: ArmatureWeapon|GunRight
+      74: -5425105989991864868
+    second: ArmatureWeapon|GunRunningForwards
+  - first:
+      74: 8581077016838852926
+    second: ArmatureWeapon|GunRunningForwardsLeft
+  - first:
+      74: -2765754160069562800
+    second: ArmatureWeapon|GunRunningForwardsRight
+  - first:
+      74: 8022285295890523782
+    second: ArmatureWeapon|GunRunningLeft
+  - first:
+      74: -4537824632627219916
+    second: ArmatureWeapon|GunRunningRight
   - first:
       74: 6526436678522362802
     second: ArmatureWeapon|GunStanding
@@ -47,8 +59,8 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: ArmatureWeapon|GunBack
-      takeName: ArmatureWeapon|GunBack
+      name: ArmatureWeapon|GunRunningBackwards
+      takeName: ArmatureWeapon|GunRunningBackwards
       internalID: 0
       firstFrame: 0
       lastFrame: 39
@@ -76,8 +88,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: ArmatureWeapon|GunFore
-      takeName: ArmatureWeapon|GunFore
+      name: ArmatureWeapon|GunRunningBackwardsLeft
+      takeName: ArmatureWeapon|GunRunningBackwardsLeft
       internalID: 0
       firstFrame: 0
       lastFrame: 39
@@ -105,8 +117,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: ArmatureWeapon|GunLeft
-      takeName: ArmatureWeapon|GunLeft
+      name: ArmatureWeapon|GunRunningBackwardsRight
+      takeName: ArmatureWeapon|GunRunningBackwardsRight
       internalID: 0
       firstFrame: 0
       lastFrame: 39
@@ -134,8 +146,124 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: ArmatureWeapon|GunRight
-      takeName: ArmatureWeapon|GunRight
+      name: ArmatureWeapon|GunRunningForwards
+      takeName: ArmatureWeapon|GunRunningForwards
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 39
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: ArmatureWeapon|GunRunningForwardsLeft
+      takeName: ArmatureWeapon|GunRunningForwardsLeft
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 39
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: ArmatureWeapon|GunRunningForwardsRight
+      takeName: ArmatureWeapon|GunRunningForwardsRight
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 39
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: ArmatureWeapon|GunRunningLeft
+      takeName: ArmatureWeapon|GunRunningLeft
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 39
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: ArmatureWeapon|GunRunningRight
+      takeName: ArmatureWeapon|GunRunningRight
       internalID: 0
       firstFrame: 0
       lastFrame: 39
@@ -167,14 +295,14 @@ ModelImporter:
       takeName: ArmatureWeapon|GunStanding
       internalID: 0
       firstFrame: 0
-      lastFrame: 39
+      lastFrame: 40
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0

@@ -2,21 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+enum AnimState
+{
+    Standing,
+    Forwards,
+    Backwards,
+    ForwardsLeft,
+    ForwardsRight,
+    BackwardsLeft,
+    BackwardsRight,
+    Left,
+    Right,
+};
+
 public class PlayerMovement : MonoBehaviour
 {
     // <Settings>
     // walkspeed of player
     public float walkSpeed = 1f;
-    public float walkSpeedForeBack = 1f;
-    public float walkSpeedDiagonal = 1f;
-    public float walkSpeedLeftRight = 1f;
+    public float walkSpeedForeBack = 2.5f;
+    public float walkSpeedDiagonal = 2.3f;
+    public float walkSpeedLeftRight = 3f;
     public float gravity = -9.81f;
     public float groundDistance = 0.4f;
+    public float transformTimeBetweenAnimations = 0.3f;
 
     // <Objects>
     // character/gun animator
     public Animator charAnimator;
     public Animator gunAnimator;
+
+    public Animation[] characterAnimations;
     // character controller of player
     public CharacterController controller;
     // joystick object
@@ -30,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
     Vector3 velocity;
     bool isGrounded;
     // animation state
-    int animState = 0;
+    AnimState animState = AnimState.Standing;
     // Start is called before the first frame update
     void Start()
     {
@@ -57,84 +73,117 @@ public class PlayerMovement : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
 
         // Animation settings
-        CheckAnimationState(move);
+        CheckAnimationState(walkJoystick.InputVector);
     }
 
 
-    void CheckAnimationState(Vector3 movementVec)
+    void CheckAnimationState(Vector2 movementVec)
     {
+        float animTime = charAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        while (animTime > 1)
+        {
+            animTime -= 1;
+
+        }
         
         // check movement vector to animation state
         if (movementVec.magnitude > 0)
         {
             // get angular to get walking direction
-            float walkingAng = Mathf.Atan(movementVec.x / movementVec.z);
-            Debug.Log(walkingAng.ToString());
-            if (Mathf.Abs(movementVec.z) >= Mathf.Abs(movementVec.x))
+            float walkingAng = Mathf.Atan(movementVec.x / movementVec.y);
+            // Forward
+            if (animState != AnimState.Forwards && (Mathf.Abs(walkingAng) <= Mathf.PI / 8) && movementVec.y > 0 && Mathf.Abs(movementVec.y) > Mathf.Abs(movementVec.x))
             {
-                // Forward
-                if ((Mathf.Abs(walkingAng) <= Mathf.PI / 8) && movementVec.z > 0 && Mathf.Abs(movementVec.z) > Mathf.Abs(movementVec.x))
-                {
-                    animState = 1;
-                    charAnimator.speed = walkSpeedForeBack;
-                    gunAnimator.speed = walkSpeedForeBack;
-                }
-                // Forward-Right
-                else if (walkingAng > Mathf.PI / 8 && walkingAng < Mathf.PI / 4 && movementVec.z > 0 && movementVec.x > 0)
-                {
-                    animState = 6;
-                    charAnimator.speed = walkSpeedDiagonal;
-                    gunAnimator.speed = walkSpeedDiagonal;
-                }
-                // Right
-                else if ((Mathf.Abs(walkingAng) >= Mathf.PI / 4) && movementVec.x > 0 && Mathf.Abs(movementVec.z) < Mathf.Abs(movementVec.x))
-                {
-                    animState = 3;
-                    charAnimator.speed = walkSpeedLeftRight;
-                    gunAnimator.speed = walkSpeedLeftRight;
-                }
-                // Backward-Right
-                else if (walkingAng < -Mathf.PI / 8 && walkingAng > -Mathf.PI / 4 && movementVec.z < 0 && movementVec.x > 0)
-                {
+                animState = AnimState.Forwards;
+                charAnimator.CrossFade("BodyRunningForwardsWithGun", transformTimeBetweenAnimations, 0, animTime);
+                gunAnimator.CrossFade("GunRunningForwards", transformTimeBetweenAnimations, 0, animTime);
 
-                }
-                // Backward
-                else if ((Mathf.Abs(walkingAng) <= Mathf.PI / 8) && movementVec.z < 0 && Mathf.Abs(movementVec.z) > Mathf.Abs(movementVec.x))
-                {
-                    animState = 2;
-                    charAnimator.speed = walkSpeedForeBack;
-                    gunAnimator.speed = walkSpeedForeBack;
-                }
-                // Backward-Left
-                else if (walkingAng > Mathf.PI / 8 && walkingAng < Mathf.PI / 4 && movementVec.z < 0 && movementVec.x < 0)
-                {
+                charAnimator.speed = walkSpeedForeBack;
+                gunAnimator.speed = walkSpeedForeBack;
+            }
+            // Forward-Right
+            else if (animState != AnimState.ForwardsRight && walkingAng > Mathf.PI / 8 && walkingAng < Mathf.PI / 3 && movementVec.y > 0 && movementVec.x > 0)
+            {
+                animState = AnimState.ForwardsRight;
+                charAnimator.CrossFade("BodyRunningForwardRightWithGun", transformTimeBetweenAnimations,  0, animTime);
+                gunAnimator.CrossFade("GunRunningForwardsRight", transformTimeBetweenAnimations, 0, animTime);
 
-                }
-                // Left
-                else if ((Mathf.Abs(walkingAng) >= Mathf.PI / 4) && movementVec.x < 0 && Mathf.Abs(movementVec.z) < Mathf.Abs(movementVec.x))
-                {
-                    animState = 4;
-                    charAnimator.speed = walkSpeedLeftRight;
-                    gunAnimator.speed = walkSpeedLeftRight;
-                }
-                // Forward-Left
-                else if (walkingAng < -Mathf.PI / 8 && walkingAng > -Mathf.PI / 4 && movementVec.z > 0 && movementVec.x < 0)
-                {
-                    animState = 5;
-                    charAnimator.speed = walkSpeedDiagonal;
-                    gunAnimator.speed = walkSpeedDiagonal;
-                }
-                Debug.Log(animState.ToString());
-        } else
+                charAnimator.speed = walkSpeedDiagonal;
+                gunAnimator.speed = walkSpeedDiagonal;
+            }
+            // Right
+            else if (animState != AnimState.Right && (Mathf.Abs(walkingAng) >= Mathf.PI / 3) && movementVec.x > 0 && Mathf.Abs(movementVec.y) < Mathf.Abs(movementVec.x))
+            {
+                animState = AnimState.Right;
+                charAnimator.CrossFade("BodyRunningRightWithGun", transformTimeBetweenAnimations, 0, animTime);
+                gunAnimator.CrossFade("GunRunningRight", transformTimeBetweenAnimations, 0, animTime);
+
+                charAnimator.speed = walkSpeedLeftRight;
+                gunAnimator.speed = walkSpeedLeftRight;
+            }
+            // Backward-Right
+            else if (animState != AnimState.BackwardsRight && walkingAng < -Mathf.PI / 8 && walkingAng > -Mathf.PI / 3 && movementVec.y < 0 && movementVec.x > 0)
+            {
+                animState = AnimState.BackwardsRight;
+                charAnimator.CrossFade("BodyRunningBackwardsRightWithGun", transformTimeBetweenAnimations, 0, animTime);
+                gunAnimator.CrossFade("GunRunningBackwardsRight", transformTimeBetweenAnimations, 0, animTime);
+
+                charAnimator.speed = walkSpeedDiagonal;
+                gunAnimator.speed = walkSpeedDiagonal;
+            }
+            // Backward
+            else if (animState != AnimState.Backwards && (Mathf.Abs(walkingAng) <= Mathf.PI / 8) && movementVec.y < 0 && Mathf.Abs(movementVec.y) > Mathf.Abs(movementVec.x))
+            {
+                animState = AnimState.Backwards;
+                charAnimator.CrossFade("BodyRunningBackwardsWithGun", transformTimeBetweenAnimations, 0, animTime);
+                gunAnimator.CrossFade("GunRunningBackwards", transformTimeBetweenAnimations, 0, animTime);
+
+                charAnimator.speed = walkSpeedForeBack;
+                gunAnimator.speed = walkSpeedForeBack;
+            }
+            // Backward-Left
+            else if (animState != AnimState.BackwardsLeft && walkingAng > Mathf.PI / 8 && walkingAng < Mathf.PI / 3 && movementVec.y < 0 && movementVec.x < 0)
+            {
+                animState = AnimState.BackwardsLeft;
+                charAnimator.CrossFade("BodyRunningBackwardsLeftWithGun", transformTimeBetweenAnimations, 0, animTime);
+                gunAnimator.CrossFade("GunRunningBackwardsLeft", transformTimeBetweenAnimations, 0, animTime);
+
+                charAnimator.speed = walkSpeedDiagonal;
+                gunAnimator.speed = walkSpeedDiagonal;
+            }
+            // Left
+            else if (animState != AnimState.Left && (Mathf.Abs(walkingAng) >= Mathf.PI / 3) && movementVec.x < 0 && Mathf.Abs(movementVec.y) < Mathf.Abs(movementVec.x))
+            {
+                animState = AnimState.Left;
+                charAnimator.CrossFade("BodyRunningLeftWithGun", transformTimeBetweenAnimations, 0, animTime);
+                gunAnimator.CrossFade("GunRunningLeft", transformTimeBetweenAnimations, 0, animTime);
+
+                charAnimator.speed = walkSpeedLeftRight;
+                gunAnimator.speed = walkSpeedLeftRight;
+            }
+            // Forward-Left
+            else if (animState != AnimState.ForwardsLeft && walkingAng < -Mathf.PI / 8 && walkingAng > -Mathf.PI / 3 && movementVec.y > 0 && movementVec.x < 0)
+            {
+                animState = AnimState.ForwardsLeft;
+                charAnimator.CrossFade("BodyRunningForwardLeftWithGun", 0.3f, 0, animTime);
+                gunAnimator.CrossFade("GunRunningForwardsLeft", 0.3f, 0, animTime);
+
+                charAnimator.speed = walkSpeedDiagonal;
+                gunAnimator.speed = walkSpeedDiagonal;
+            }
+        }
+        else if (animState != AnimState.Standing)
         {
-            animState = 0;
+            animState = AnimState.Standing;
+            charAnimator.CrossFade("BodyStandingWithGun", 0.2f, 0, animTime);
+            gunAnimator.CrossFade("GunStanding", 0.2f, 0, animTime);
+
             charAnimator.speed = 1f;
             gunAnimator.speed = 1f;
         }
-
+        Debug.Log(animState.ToString());
         // set animator variable
 
-        charAnimator.SetInteger("AnimationState", animState);
-        gunAnimator.SetInteger("RunningState", animState);
+
     }
 }
