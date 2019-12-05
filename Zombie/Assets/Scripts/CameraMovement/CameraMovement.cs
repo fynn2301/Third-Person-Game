@@ -7,7 +7,7 @@ public class CameraMovement : MonoBehaviour
     // <settings>
     
     // turn speed
-    public float mouseSensitivity = 20f;
+    public float mouseSensitivity = 10f;
 
     // <Objects>
     // playerbody to rotate aroud
@@ -40,7 +40,7 @@ public class CameraMovement : MonoBehaviour
             // moving camera x 
             playerBody.Rotate(Vector3.up * TouchDist.x);
             xRotation -= TouchDist.y;
-            xRotation = Mathf.Clamp(xRotation, -20f, 45f);
+            xRotation = Mathf.Clamp(xRotation, -30f, 30f);
 
             // and y
             yRotationCameraObject.localRotation = Quaternion.Euler(xRotation, 0f, 0f);

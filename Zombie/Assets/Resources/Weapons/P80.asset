@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c57f887285f24bef9392d4a00038fab, type: 3}
+  m_Name: P80
+  m_EditorClassIdentifier: 
+  weaponType: 0
+  damage: 10
+  magazinSize: 7
+  loadStatus: 7
+  fireDistance: 100
+  weaponPrefab: {fileID: 6417493891449585814, guid: bcae85e1e89c448848fc7bef5dfb2cb1,
+    type: 3}
+  fireRate: 0.3
