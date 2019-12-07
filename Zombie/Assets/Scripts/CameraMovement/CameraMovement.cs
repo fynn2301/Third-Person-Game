@@ -7,9 +7,10 @@ public class CameraMovement : MonoBehaviour
     // <settings>
     
     // turn speed
-    public float mouseSensitivity = 10f;
+    public float mouseSensitivityX = 15;
+    public float mouseSensitivityY = 10;
 
-    // <Objects>
+    // <Objects>S
     // playerbody to rotate aroud
     public Transform playerBody;
 
@@ -35,7 +36,8 @@ public class CameraMovement : MonoBehaviour
         {
             // getting camera vec
             TouchDist = Input.touches[PointerId].position - PointerOld;
-            TouchDist *= mouseSensitivity * Time.deltaTime;
+            TouchDist *= new Vector2(mouseSensitivityX * Time.deltaTime * 0.1f, 1);
+            TouchDist *= new Vector2(1, mouseSensitivityY * Time.deltaTime * 0.1f);
 
             // moving camera x 
             playerBody.Rotate(Vector3.up * TouchDist.x);

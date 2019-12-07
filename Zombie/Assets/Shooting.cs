@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class Shooting : MonoBehaviour
 {
+    // shotimpacts
+    public GameObject shotImpactWood;
+
     // objects required
     public Camera fpsCam;
     public ParticleSystem muzzleFlash;
@@ -76,7 +79,10 @@ public class Shooting : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))
         {
+            
             Debug.Log(hit.transform.name);
+            Quaternion shotImpactQuernion = Quaternion.Euler(fpsCam.transform.forward); 
+            GameObject impact = Instantiate(shotImpactWood, hit.point, shotImpactQuernion);
         }
 
     }

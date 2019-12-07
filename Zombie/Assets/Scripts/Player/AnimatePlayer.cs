@@ -35,7 +35,6 @@ public class AnimatePlayer : MonoBehaviour
 
     // character/gun animator
     public Animator charAnimator;
-    public Animator gunAnimator;
     public Animation[] characterAnimations;
 
     // joystick object
@@ -118,7 +117,6 @@ public class AnimatePlayer : MonoBehaviour
                 controllAnimationControllers(animTime, "BodyRunningForwardsWithGun", "BodyRunningForwardsWithGun", "GunRunningForwards");
 
                 charAnimator.speed = walkSpeedForeBack;
-                gunAnimator.speed = walkSpeedForeBack;
             }
             // Forward-Right
             else if (animState != AnimState.ForwardsRight && walkingAng > Mathf.PI / 8 && walkingAng < Mathf.PI / 3 && movementVec.y > 0 && movementVec.x > 0)
@@ -127,7 +125,6 @@ public class AnimatePlayer : MonoBehaviour
                 controllAnimationControllers(animTime, "BodyRunningForwardRightWithGun", "BodyRunningForwardRightWithGun", "GunRunningForwardsRight");
 
                 charAnimator.speed = walkSpeedDiagonal;
-                gunAnimator.speed = walkSpeedDiagonal;
             }
             // Right
             else if (animState != AnimState.Right && (Mathf.Abs(walkingAng) >= Mathf.PI / 3) && movementVec.x > 0 && Mathf.Abs(movementVec.y) < Mathf.Abs(movementVec.x))
@@ -136,7 +133,6 @@ public class AnimatePlayer : MonoBehaviour
                 controllAnimationControllers(animTime, "BodyRunningRightWithGun", "BodyRunningRightWithGun", "GunRunningRight");
 
                 charAnimator.speed = walkSpeedLeftRight;
-                gunAnimator.speed = walkSpeedLeftRight;
             }
             // Backward-Right
             else if (animState != AnimState.BackwardsRight && walkingAng < -Mathf.PI / 8 && walkingAng > -Mathf.PI / 3 && movementVec.y < 0 && movementVec.x > 0)
@@ -145,7 +141,6 @@ public class AnimatePlayer : MonoBehaviour
                 controllAnimationControllers(animTime, "BodyRunningBackwardsRightWithGun", "BodyRunningBackwardsRightWithGun", "GunRunningBackwardsRight");
 
                 charAnimator.speed = walkSpeedDiagonal;
-                gunAnimator.speed = walkSpeedDiagonal;
             }
             // Backward
             else if (animState != AnimState.Backwards && (Mathf.Abs(walkingAng) <= Mathf.PI / 8) && movementVec.y < 0 && Mathf.Abs(movementVec.y) > Mathf.Abs(movementVec.x))
@@ -154,7 +149,6 @@ public class AnimatePlayer : MonoBehaviour
                 controllAnimationControllers(animTime, "BodyRunningBackwardsWithGun", "BodyRunningBackwardsWithGun", "GunRunningBackwards");
 
                 charAnimator.speed = walkSpeedForeBack;
-                gunAnimator.speed = walkSpeedForeBack;
             }
             // Backward-Left
             else if (animState != AnimState.BackwardsLeft && walkingAng > Mathf.PI / 8 && walkingAng < Mathf.PI / 3 && movementVec.y < 0 && movementVec.x < 0)
@@ -163,7 +157,6 @@ public class AnimatePlayer : MonoBehaviour
                 controllAnimationControllers(animTime, "BodyRunningBackwardsLeftWithGun", "BodyRunningBackwardsLeftWithGun", "GunRunningBackwardsLeft");
 
                 charAnimator.speed = walkSpeedDiagonal;
-                gunAnimator.speed = walkSpeedDiagonal;
             }
             // Left
             else if (animState != AnimState.Left && (Mathf.Abs(walkingAng) >= Mathf.PI / 3) && movementVec.x < 0 && Mathf.Abs(movementVec.y) < Mathf.Abs(movementVec.x))
@@ -172,7 +165,6 @@ public class AnimatePlayer : MonoBehaviour
                 controllAnimationControllers(animTime, "BodyRunningLeftWithGun", "BodyRunningLeftWithGun", "GunRunningLeft");
 
                 charAnimator.speed = walkSpeedLeftRight;
-                gunAnimator.speed = walkSpeedLeftRight;
             }
             // Forward-Left
             else if (animState != AnimState.ForwardsLeft && walkingAng < -Mathf.PI / 8 && walkingAng > -Mathf.PI / 3 && movementVec.y > 0 && movementVec.x < 0)
@@ -181,7 +173,6 @@ public class AnimatePlayer : MonoBehaviour
                 controllAnimationControllers(animTime, "BodyRunningForwardLeftWithGun", "BodyRunningForwardLeftWithGun", "GunRunningForwardsLeft");
 
                 charAnimator.speed = walkSpeedDiagonal;
-                gunAnimator.speed = walkSpeedDiagonal;
             }
         }
         else if (animState != AnimState.Standing)
@@ -191,10 +182,8 @@ public class AnimatePlayer : MonoBehaviour
 
             charAnimator.CrossFade("BodyStandingWithGun", 0.1f, 0, animTime);
             charAnimator.CrossFade("BodyStandingWithGun", 0.1f, 1, animTime);
-            gunAnimator.CrossFade("GunStanding", 0.1f, 0, animTime);
 
             charAnimator.speed = 1f;
-            gunAnimator.speed = 1f;
         }
         float leanAng = cameraParent.transform.localEulerAngles.x;
         if (leanAng > 180f)
@@ -239,7 +228,6 @@ public class AnimatePlayer : MonoBehaviour
     {
         charAnimator.CrossFade(stateNameLowerBody, transformTimeBetweenAnimations, 0, animTime);
         charAnimator.CrossFade(stateNameUpperBody, transformTimeBetweenAnimations, 1, animTime);
-        gunAnimator.CrossFade(stateNameGun, transformTimeBetweenAnimations, 0, animTime);
     }
 
     public void shootAnimationGun(float fireRate)
