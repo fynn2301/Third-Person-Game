@@ -7,8 +7,8 @@ public class CameraMovement : MonoBehaviour
     // <settings>
     
     // turn speed
-    public float mouseSensitivityX = 15;
-    public float mouseSensitivityY = 10;
+    public float mouseSensitivityX = 30;
+    public float mouseSensitivityY = 20;
 
     // <Objects>S
     // playerbody to rotate aroud
